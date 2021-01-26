@@ -48,5 +48,11 @@ function userLogin() {
     document.getElementById('login').addEventListener('submit', (event) => {
         event.preventDefault()
         let username = event.target.username.value
+        //fetch array of objects of all users
+        //find object where the usernames are the same
+        //pull that person's clothing
+
+        //rails find by username or create in user controller
+        //make current user as an empty object
     })
 }
