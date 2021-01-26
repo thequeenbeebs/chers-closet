@@ -9,9 +9,15 @@ class ClothingsController < ApplicationController
         render json: new_item
     end
 
-    def destroy
-        item = Clothing.find_by(id: params(:id))
-        
+    def update
+        item = Clothing.find(params[:id])
+        item.update(clothing_params)
+        render json: item
+    end
+
+    def delete
+        item = Clothing.find_by(id: params[:id])
+        item.destroy
     end
 
     private
