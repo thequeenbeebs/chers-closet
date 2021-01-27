@@ -3,12 +3,15 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Courier New";
+    background-attachment: fixed;
   }
 
 h1 {
     font-family: "blippoblack";
     text-transform: lowercase;
     padding-left: 20px;
+    padding-top: 0;
+    letter-spacing: 2px;
   }
 
 h2 {
@@ -16,6 +19,7 @@ h2 {
   text-transform: lowercase;
   border: solid black 2px;
   border-radius: 5px;
+  letter-spacing: 2px;
 }
 
 #navbar {
@@ -24,6 +28,9 @@ h2 {
   overflow: hidden;
   color: white;
   background-color: black;
+  width: 100%;
+  height: 10%;
+  position: fixed;
 }
 
 .nav-buttons {
@@ -39,12 +46,13 @@ h2 {
 }
 
 #login {
-  padding: 20px;
-  margin: 10px;
+  padding-top: 5px;
+  margin: 10px; 
 }
 
 #content {
   padding: 40px;
+  padding-top: 100px;
 }
 
 #footer{
@@ -52,12 +60,14 @@ h2 {
   bottom: 0;
   left: 0;
   background-color: black;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
+  width: 100%;
+  height: 10%;
  }
 
  #footer > * {
-   margin: 20px;
+   /* margin: 20px; */
  }
 
  .hidden {
@@ -66,7 +76,7 @@ h2 {
 
  .card {
    background-color: white;
-   width: 50%;
+   width: 25%;
    padding: 20px;
    margin: 20px;
  }
@@ -84,10 +94,16 @@ h2 {
   text-transform: lowercase;
   font-size: 20px;
   border-radius: 5px;
+  letter-spacing: 2px;
 }
 
 input[type=text] {
   padding: 5px;
   margin: 5px;
+}
+
+img {
+  height: 75%;
+  width: 75%;
 }
 
