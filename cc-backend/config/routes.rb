@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   get "/users/:username", to: "users#show"
   get "/outfits", to: "outfits#index"
   post "/outfits", to: "outfits#create"
+  patch "/outfits/:id", to: "outfits#update"
+  delete '/outfits/:id', to: "outfits#delete"
 end

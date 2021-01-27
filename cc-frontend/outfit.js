@@ -15,10 +15,7 @@ function viewOutfits(outfits) {
 
 function renderOutfits(outfit) {
     let getLocation = document.querySelector("#card-container")
-    let div = document.createElement("div")
-    div.classList.add("card")
-    div.id = `outfit-${outfit.id}`
-
+    let div = document.getElementById(`outfit-${outfit.id}`)
     let header = document.createElement("h2")
         header.innerHTML = outfit.name
     let season = document.createElement('p')
@@ -30,9 +27,16 @@ function renderOutfits(outfit) {
         button1.addEventListener('click', () => renderEditOutfitForm(outfit))
     let button2 = document.createElement("button")
         button2.innerHTML = "Delete Item"
-
-    div.append(header, season, occasion, button1, button2)
-    getLocation.append(div)
+        button2.addEventListener('click', () => deleteOutfit(outfit))
+    if (div) {
+            div.append(header, season, occasion, button1, button2)
+    } else {
+            div = document.createElement("div")
+            div.id = `outfit-${outfit.id}`
+            div.classList.add("card")
+            div.append(header, season, occasion, button1, button2)
+            getLocation.append(div)
+    }
 }
 
 // CREATE FUNCTIONS 
@@ -70,8 +74,8 @@ function createOutfit(event) {
     let newOutfit = {
         name: event.target.name.value,
         season: event.target.season.value,
-        occasion: event.target.occasion.value
-
+        occasion: event.target.occasion.value,
+        user_id: CURRENT_USER.id
     }
 
     let reqPack = {
@@ -132,6 +136,15 @@ function updateOutfit(event, outfit) {
         .then(resp => resp.json())
         .then(item => {
             document.getElementById(`outfit-${outfit.id}`).innerHTML = ""
-            renderOutfit(item)
+            renderOutfits(item)
         })
+}
+
+// DELETE FUNCTIONS
+
+function deleteOutfit(outfit) {
+    fetch(`http://localhost:3000/outfits/${outfit.id}`, {method: "DELETE"})
+    let index = CURRENT_USER.outfits.indexOf(outfit)
+    CURRENT_USER.outfits.splice(index, 1)
+    viewOutfits(CURRENT_USER.outfits)
 }

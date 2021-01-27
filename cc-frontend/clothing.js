@@ -188,6 +188,8 @@ function updateItem(event, clothing) {
 function deleteItem(clothing) {
     fetch(`http://localhost:3000/clothings/${clothing.id}`, {method: "DELETE"})
     let index = CURRENT_USER.clothings.indexOf(clothing)
+    
     CURRENT_USER.clothings.splice(index, 1)
+    
     viewClothing(CURRENT_USER.clothings)
 }
