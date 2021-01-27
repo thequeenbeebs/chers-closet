@@ -1,15 +1,31 @@
 body {
     background-image: url('https://images-na.ssl-images-amazon.com/images/I/91vKzxi7E9L._AC_SL1500_.jpg'); 
-    background-size: cover;
+    margin: 0;
+    padding: 0;
+    font-family: "Courier New";
   }
 
+h1 {
+    font-family: "blippoblack";
+    text-transform: lowercase;
+    padding-left: 20px;
+  }
+
+h2 {
+  font-family: "blippoblack";
+  text-transform: lowercase;
+}
+
 #navbar {
-  list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   color: white;
-  background-color: #333;
+  background-color: black;
+}
+
+.nav-buttons {
+  margin: 20px;
 }
 
 .left {
@@ -18,12 +34,11 @@ body {
 
 .right {
   float: right;
-  margin-right: 20px;
-  margin-left: 20px;
 }
 
 #login {
   padding: 20px;
+  margin: 10px;
 }
 
 #footer{
@@ -36,7 +51,23 @@ body {
    display: none;
  }
 
- #card-container {
+ .card {
    background-color: white;
+   width: 50%;
  }
+
+ input[type=submit], button {
+  background-color: black;
+  border: solid white 1px;
+  color: white;
+  font-family: "blippoblack";
+  text-transform: lowercase;
+  font-size: 20px;
+  border-radius: 5px;
+}
+
+input[type=text] {
+  padding: 5px;
+  margin: 5px;
+}
 
