@@ -39,9 +39,21 @@ function getOutfits (){
     .then(r => r.json())
     .then((outfitData) => {
         
-        outfitData.forEach(renderOutfits)
+        viewOutfits(outfitData)
     })
 
+}
+
+
+function viewOutfits(outfits) {
+    document.getElementById('card-container').innerHTML = ""
+    document.getElementById('create-container').innerHTML = ""
+    let addButton = document.createElement('button')
+        addButton.innerHTML = "Add Outfit"
+        addButton.addEventListener('click', () => renderAddOutfitForm())
+    document.getElementById('create-container').append(addButton)
+    outfits.forEach(renderOutfits)
+    
 }
 function renderOutfits(outfit) {
     let getLocation = document.querySelector("#outfit-container")
@@ -137,6 +149,62 @@ function renderAddClothingForm() {
     form.append(name, brand, category, color, image, submit)
     container.append(form)
 }
+
+function renderAddOutfitForm() {
+    let container = document.getElementById('create-container')
+        container.innerHTML = ""
+    let form = document.createElement('form')
+    form.addEventListener('submit', (event)=> createOutfit(event))
+    let name = document.createElement('input')
+        name.type = "text"   
+        name.name = "name"
+        name.placeholder = "outfit name"
+    let season = document.createElement('input')
+        season.type = "text"
+        season.name = "season"
+        season.placeholder = "season"
+    let occasion = document.createElement('input')
+        occasion.type = "text"
+        occasion.name = "occasion"
+        occasion.placeholder = "occasion"
+    let submit = document.createElement('input')
+        submit.type = "submit"
+    form.append(name, season, occasion, submit)
+    container.append(form)
+
+
+    
+}
+
+function createOutfit(event) {
+    event.preventDefault()
+    document.getElementById('create-container').innerHTML = ""
+    let addButton = document.createElement('button')
+        addButton.innerHTML = "Add Outfit"
+        addButton.addEventListener('click', () => renderAddOutfitForm())
+    document.getElementById('create-container').append(addButton)
+    let newOutfit = {
+        name: event.target.name.value,
+        season: event.target.season.value,
+        occasion: event.target.occasion.value
+
+    }
+    let reqPack = {
+        headers: {
+            "Content-Type": "application/json"
+
+        },
+        method: "POST",
+        body: JSON.stringify(newOutfit)
+
+    }
+
+    fetch('http://localhost:3000/outfits', reqPack)
+        .then(r => r.json())
+        .then(outfit =>  renderOutfits(outfit))
+}
+
+
 
 function createClothing(event) {
     event.preventDefault()
