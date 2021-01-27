@@ -89,10 +89,20 @@ function renderAddClothingForm() {
         brand.name = "brand"
         brand.placeholder = "brand name"
     let category = document.createElement('select')
-        let categoriesArray = ['Tops', 'Sweaters', 'Pants', 'Shorts', 'Skirts', 'Dresses', 'Jackets', 'Shoes', 'Bags', 'Jewelry']
+        let categoriesArray = ['tops', 'sweaters', 'pants', 'shorts', 'skirts', 'dresses', 'jackets', 'shoes', 'bags', 'jewelry']
         category.name = "category"
-        category.placeholder = "category"
-        categoriesArray.forEach(categoruy)
+        let placeholder = document.createElement('option')
+            placeholder.innerHTML = "category"
+            placeholder.setAttribute("disabled", true)
+            placeholder.setAttribute("selected", true)
+            placeholder.setAttribute("hidden", true)
+        category.append(placeholder)
+        categoriesArray.forEach(cat => {
+            let option = document.createElement('option')
+                option.value = cat
+                option.innerHTML = cat
+                category.append(option)
+        })
     let color = document.createElement('input')
         color.type = "text"
         color.name = "color"
