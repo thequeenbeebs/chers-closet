@@ -67,7 +67,8 @@ h2 {
  }
 
  #footer > * {
-   margin: 20px;
+   width: 10%;
+   margin: 20px auto;
  }
 
  .hidden {
@@ -82,8 +83,12 @@ h2 {
  }
 
  .card > * {
-   margin: 20px;
+   margin: 5px auto;
    text-align: center;
+ }
+
+ .card button {
+   margin: 10px;
  }
 
  input[type=submit], button {
@@ -105,5 +110,6 @@ input[type=text] {
 img {
   height: 75%;
   width: 75%;
+  display: block;
 }
 
