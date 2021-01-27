@@ -1,6 +1,7 @@
 let CURRENT_USER = ""
+let CATEGORIES_ARRAY = ['tops', 'sweaters', 'pants', 'shorts', 'skirts', 'dresses', 'jackets', 'shoes', 'bags', 'jewelry']
 
-addEventListener("DOMContentLoaded", ()=> {
+document.addEventListener("DOMContentLoaded", ()=> {
     userLogin()
 })
 
@@ -105,7 +106,7 @@ function renderUserPage(user) {
         outfitButton.innerHTML = "View Outfits"
         outfitButton.classList.add('right')
         outfitButton.classList.add('nav-buttons')
-        outfitButton.addEventListener('click', () => getOutfits(user.outfits))
+        outfitButton.addEventListener('click', () => viewOutfits(user.outfits))
     navbar.append(outfitButton, clothingButton)
     document.getElementById("login").remove()
 }
