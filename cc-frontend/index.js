@@ -1,4 +1,5 @@
 let CURRENT_USER = ""
+let CATEGORIES_ARRAY = ['tops', 'sweaters', 'pants', 'shorts', 'skirts', 'dresses', 'jackets', 'shoes', 'bags', 'jewelry']
 
 addEventListener("DOMContentLoaded", ()=> {
     userLogin()
@@ -67,11 +68,18 @@ function renderUserPage(user) {
 function viewClothing(clothings) {
     document.getElementById('card-container').innerHTML = ""
     document.getElementById('create-container').innerHTML = ""
+    document.getElementById('footer').innerHTML = ""
     let addButton = document.createElement('button')
         addButton.innerHTML = "Add Clothing Item"
         addButton.addEventListener('click', () => renderAddClothingForm())
     document.getElementById('create-container').append(addButton)
     clothings.forEach(renderClothing)
+    CATEGORIES_ARRAY.forEach(cat => {
+        let catButton = document.createElement('button')
+            catButton.innerHTML = cat
+            catButton.addEventListener('click', () => filterByCategory(cat))
+            document.getElementById('footer').append(catButton)
+    })
     
 }
 
@@ -89,7 +97,6 @@ function renderAddClothingForm() {
         brand.name = "brand"
         brand.placeholder = "brand name"
     let category = document.createElement('select')
-        let categoriesArray = ['tops', 'sweaters', 'pants', 'shorts', 'skirts', 'dresses', 'jackets', 'shoes', 'bags', 'jewelry']
         category.name = "category"
         let placeholder = document.createElement('option')
             placeholder.innerHTML = "category"
@@ -97,7 +104,7 @@ function renderAddClothingForm() {
             placeholder.setAttribute("selected", true)
             placeholder.setAttribute("hidden", true)
         category.append(placeholder)
-        categoriesArray.forEach(cat => {
+        CATEGORIES_ARRAY.forEach(cat => {
             let option = document.createElement('option')
                 option.value = cat
                 option.innerHTML = cat
@@ -208,4 +215,9 @@ function updateItem(event, clothing) {
             document.getElementById(`clothing-${clothing.id}`).innerHTML = ""
             renderClothing(item)
         })
+}
+
+function filterByCategory(cat) {
+    let filteredClothing = CURRENT_USER.clothings.filter(item => item.category === cat)
+    viewClothing(filteredClothing)
 }
