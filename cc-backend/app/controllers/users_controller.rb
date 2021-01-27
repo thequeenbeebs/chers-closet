@@ -6,6 +6,6 @@ class UsersController < ApplicationController
 
     def show
         current_user = User.find_or_create_by(username: params[:username])
-        render json: current_user, include: [:clothings, :outfits]
+        render json: current_user, except: [:created_at, :updated_at], include: [:clothings, :outfits]
     end
 end

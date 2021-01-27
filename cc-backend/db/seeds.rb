@@ -42,3 +42,12 @@ date_night = Outfit.create(name: "Date Night", season: "Any", occasion: "Upscale
     OutfitClothing.create(clothing_id: heels.id, outfit_id: date_night.id)
     OutfitClothing.create(clothing_id: white_tee.id, outfit_id: date_night.id)
 
+# cher's clothes
+black_dress = Clothing.create(name: "Skater Dress", brand: "Forever 21", category: "dresses", color: "Black", image: "https://www.forever21.com/dw/image/v2/BFKH_PRD/on/demandware.static/-/Sites-f21-master-catalog/default/dw6cf27273/4_full_750/00402624-03.jpg?sw=500&sh=750", user_id: cher.id)
+plaid_coat = Clothing.create(name: "Plaid Coat", brand: "Bagatelle", category: "jackets", color: "Plaid", image: "https://n.nordstrommedia.com/id/sr3/42de9f1d-3bd5-4bc3-a5a4-5010e1ce65ca.jpeg?height=650&width=434", user_id: cher.id)
+button_up = Clothing.create(name: "Striped Button Down", brand: "Ann Taylor", category: "tops", color: "White", image: "https://anninc.scene7.com/is/image/ATF/505715_9000?$488x601$", user_id: cher.id)
+bike_shorts = Clothing.create(name: "Bike Shorts", brand: "Alo", category: "shorts", color: "Black", image: "https://cdn.shopify.com/s/files/1/2185/2813/products/W6218R_01_1_750x.jpg?v=1605323974", user_id: cher.id)
+cami = Clothing.create(name: "Silk Cami", brand: "Lulu's", category: "tops", color: "Chartreuse", image: "https://www.lulus.com/images/product/xlarge/5422590_1022762.jpg?w=560", user_id: cher.id)
+red_dress = Clothing.create(name: "Cowl Neck Slip Dress", brand: "UO", category: "dresses", color: "Red", image: "https://s7d5.scene7.com/is/image/UrbanOutfitters/49120231_063_f?$xlarge$=&fit=constrain&fmt=webp&qlt=80&wid=683", user_id: cher.id)
+skirt = Clothing.create(name: "Pleated Mini Skirt", brand: "Romwe", category: "skirts", color: "Purple", image: "https://img.ltwebstatic.com/images3_pi/2019/11/27/15748376930dc40aa88a9597d05ad3502766664173_thumbnail_600x.jpg", user_id: cher.id)
+
