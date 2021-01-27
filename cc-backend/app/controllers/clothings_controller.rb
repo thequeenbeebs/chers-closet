@@ -1,8 +1,8 @@
 class ClothingsController < ApplicationController
-    def index
-        clothings = Clothing.all 
-        render json: clothings
-    end
+    # def index
+    #     clothings = Clothing.all 
+    #     render json: clothings, except: [:created_at, :updated_at]
+    # end
 
     def create
         new_item = Clothing.create(clothing_params)

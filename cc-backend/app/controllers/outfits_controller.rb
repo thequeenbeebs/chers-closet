@@ -12,8 +12,6 @@ class OutfitsController < ApplicationController
     def outfit_params
         params.require(:outfit).permit(:name, :season, :occasion, :user_id)
     end
-
-        
 end
 
 
