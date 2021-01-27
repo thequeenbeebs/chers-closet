@@ -34,6 +34,36 @@ function renderClothing(clothing) {
         getLocation.append(div)
     }
 }
+function getOutfits (){
+    fetch('http://localhost:3000/outfits/')
+    .then(r => r.json())
+    .then((outfitData) => {
+        
+        outfitData.forEach(renderOutfits)
+    })
+
+}
+function renderOutfits(outfit) {
+    let getLocation = document.querySelector("#outfit-container")
+    let div = document.createElement("div")
+    div.classList.add("card")
+
+    let header = document.createElement("h2")
+        header.innerHTML = outfit.name
+    let season = document.createElement('p')
+        season.innerHTML = outfit.season
+    let occasion = document.createElement('p')
+        occasion.innerHTML = outfit.occasion
+    let button1 = document.createElement("button")
+        button1.innerHTML = "Edit Item"
+    let button2 = document.createElement("button")
+        button2.innerHTML = "Delete Item"
+
+    div.append(header, season, occasion, button1, button2)
+    getLocation.append(div)
+
+}
+
 
 function userLogin() {
     document.getElementById('login').addEventListener('submit', (event) => {
@@ -60,6 +90,7 @@ function renderUserPage(user) {
         outfitButton.innerHTML = "View Outfits"
         outfitButton.classList.add('right')
         outfitButton.classList.add('nav-buttons')
+        outfitButton.addEventListener('click', () => getOutfits(user.outfits))
     navbar.append(outfitButton, clothingButton)
     document.getElementById("login").remove()
 }
