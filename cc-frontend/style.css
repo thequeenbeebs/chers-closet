@@ -14,6 +14,8 @@ h1 {
 h2 {
   font-family: "blippoblack";
   text-transform: lowercase;
+  border: solid black 2px;
+  border-radius: 5px;
 }
 
 #navbar {
@@ -41,10 +43,15 @@ h2 {
   margin: 10px;
 }
 
+#content {
+  padding: 40px;
+}
+
 #footer{
   position:fixed;
   bottom: 25px;
   left:100px;
+  background-color: black;
  }
 
  .hidden {
@@ -54,6 +61,11 @@ h2 {
  .card {
    background-color: white;
    width: 50%;
+ }
+
+ .card > * {
+   margin: 20px;
+   text-align: center;
  }
 
  input[type=submit], button {
