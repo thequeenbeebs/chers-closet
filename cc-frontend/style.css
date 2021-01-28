@@ -4,6 +4,7 @@ body {
     padding: 0;
     font-family: "Courier New";
     background-attachment: fixed;
+    box-sizing: border-box;
   }
 
 h1 {
@@ -78,8 +79,10 @@ h2 {
  .card {
    background-color: white;
    width: 25%;
+   height: 500px;
    padding: 20px;
    margin: 20px;
+   display: inline-block;
  }
 
  .card > * {
@@ -108,7 +111,7 @@ input[type=text] {
 }
 
 img {
-  height: 75%;
+  height: 50%;
   width: 75%;
   display: block;
 }

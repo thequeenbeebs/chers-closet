@@ -51,7 +51,8 @@ function renderAddOutfitForm() {
     let container = document.getElementById('create-container')
         container.innerHTML = ""
     let form = document.createElement('form')
-    form.addEventListener('submit', (event)=> createOutfit(event))
+        form.id = "create-outfit-form"
+        form.addEventListener('submit', (event)=> createOutfit(event))
     let name = document.createElement('input')
         name.type = "text"   
         name.name = "name"
@@ -66,6 +67,7 @@ function renderAddOutfitForm() {
         occasion.placeholder = "occasion"
     let clothing = document.createElement('select')
         clothing.name = "clothingId"
+        clothing.setAttribute("multiple", true)
         let placeholder = document.createElement('option')
             placeholder.innerHTML = "clothing"
             placeholder.setAttribute("disabled", true)
@@ -78,11 +80,35 @@ function renderAddOutfitForm() {
                 option.innerHTML = item.name
                 clothing.append(option)
         })
+    // let plus = document.createElement('button')
+    //     plus.innerHTML = "+"
+    //     plus.addEventListener('click', () => addClothingInput())
     let submit = document.createElement('input')
         submit.type = "submit"
     form.append(name, season, occasion, clothing, submit)
     container.append(form)
 }
+
+// function addClothingInput() {
+//     let clothing = document.createElement('select')
+//         clothing.name = "clothingId"
+//         let placeholder = document.createElement('option')
+//             placeholder.innerHTML = "clothing"
+//             placeholder.setAttribute("disabled", true)
+//             placeholder.setAttribute("selected", true)
+//             placeholder.setAttribute("hidden", true)
+//         clothing.append(placeholder)
+//         CURRENT_USER.clothings.forEach(item => {
+//             let option = document.createElement('option')
+//                 option.value = item.id
+//                 option.innerHTML = item.name
+//                 clothing.append(option)
+//         })
+//     let plus = document.createElement('button')
+//         plus.innerHTML = "+"
+//         plus.addEventListener('click', () => addClothingInput())
+//     document.getElementById('create-outfit-form').append(clothing, plus)
+// }
 
 function createOutfit(event) {
     event.preventDefault()
@@ -110,6 +136,7 @@ function createOutfit(event) {
         .then(r => r.json())
         .then(outfit =>  {
             CURRENT_USER.outfits.push(outfit)
+            debugger
             let clothings = [CURRENT_USER.clothings.find(item => {return item.id === parseInt(event.target.clothingId.value)})]
             clothings.forEach(item => createOutfitClothing(item, outfit))
         })
