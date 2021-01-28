@@ -36,6 +36,7 @@ function renderOutfits(outfit) {
         button2.innerHTML = "Delete Outfit"
         button2.addEventListener('click', () => deleteOutfit(outfit))
     if (div) {
+            div.innerHTML = ""
             div.append(header, clothingContainer, season, occasion, button1, button2)
     } else {
             div = document.createElement("div")
@@ -72,11 +73,12 @@ function renderAddOutfitForm() {
             clothingOption.type = "checkbox"
             clothingOption.id = item.id
             clothingOption.value = item.id
-            clothingOption.name = item.id
+            clothingOption.name = `clothing-${item.id}`
         let clothingLabel = document.createElement('label')
             clothingLabel.for = item.id
             clothingLabel.innerHTML = item.name
-            clothingDiv.append(clothingOption, clothingLabel)
+        let br = document.createElement('br')
+            clothingDiv.append(clothingOption, clothingLabel, br)
     })
     let submit = document.createElement('input')
         submit.type = "submit"
@@ -86,11 +88,7 @@ function renderAddOutfitForm() {
 
 function createOutfit(event) {
     event.preventDefault()
-    document.getElementById('create-container').innerHTML = ""
-    let addButton = document.createElement('button')
-        addButton.innerHTML = "Add Outfit"
-        addButton.addEventListener('click', () => renderAddOutfitForm())
-    document.getElementById('create-container').append(addButton)
+    
     let newOutfit = {
         name: event.target.name.value,
         season: event.target.season.value,
@@ -110,9 +108,19 @@ function createOutfit(event) {
         .then(r => r.json())
         .then(outfit =>  {
             CURRENT_USER.outfits.push(outfit)
-            debugger
-            let clothings = [CURRENT_USER.clothings.find(item => {return item.id === parseInt(event.target.clothingId.value)})]
-            clothings.forEach(item => createOutfitClothing(item, outfit))
+            let checkboxes = document.querySelectorAll("input[type='checkbox']");
+                checkboxes.forEach(box => {
+                    if (box.checked) {
+                        let item = CURRENT_USER.clothings.find(item => item.id === parseInt(box.id))
+                        let outfit = CURRENT_USER.outfits[CURRENT_USER.outfits.length - 1]
+                        createOutfitClothing(item, outfit)
+                    }
+            })
+    document.getElementById('create-container').innerHTML = ""
+    let addButton = document.createElement('button')
+        addButton.innerHTML = "Add Outfit"
+        addButton.addEventListener('click', () => renderAddOutfitForm())
+    document.getElementById('create-container').append(addButton)
         })
 }
 
@@ -136,7 +144,11 @@ function createOutfitClothing(item, outfit) {
         .then(data => {
             let outfit = CURRENT_USER.outfits.find(outfit => outfit.id === data.outfit_id)
             let clothing = CURRENT_USER.clothings.find(item => item.id === data.clothing_id)
-            outfit.clothings = [clothing]
+            if (outfit.clothings) {
+                outfit.clothings.push(clothing)
+            } else {
+                outfit.clothings = [clothing]
+            }
             renderOutfits(outfit)
         })
 }
