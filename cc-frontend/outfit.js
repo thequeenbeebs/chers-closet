@@ -19,6 +19,7 @@ function renderOutfits(outfit) {
     let header = document.createElement("h2")
         header.innerHTML = outfit.name
     let clothingContainer = document.createElement('div')
+        clothingContainer.classList.add("outfit-images")
     outfit.clothings.forEach(item => {
         let img = document.createElement('img')
             img.src = item.image
@@ -39,7 +40,7 @@ function renderOutfits(outfit) {
     } else {
             div = document.createElement("div")
             div.id = `outfit-${outfit.id}`
-            div.classList.add("card")
+            div.classList.add("outfit-card")
             div.append(header, clothingContainer, season, occasion, button1, button2)
             getLocation.append(div)
     }
