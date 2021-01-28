@@ -1,4 +1,6 @@
 let CURRENT_USER = ""
+// let OUTFITS = CURRENT_USER.outfits
+// let CLOTHING = CURRENT_USER.clothings
 let CATEGORIES_ARRAY = ['tops', 'sweaters', 'pants', 'shorts', 'skirts', 'dresses', 'jackets', 'shoes', 'bags', 'jewelry']
 
 document.addEventListener("DOMContentLoaded", ()=> {

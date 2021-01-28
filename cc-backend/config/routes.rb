@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   post "/outfits", to: "outfits#create"
   patch "/outfits/:id", to: "outfits#update"
   delete '/outfits/:id', to: "outfits#delete"
+  post 'outfit_clothings', to: "outfit_clothings#create"
 end

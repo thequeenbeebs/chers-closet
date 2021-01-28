@@ -137,10 +137,19 @@ function renderEditClothingForm(clothing) {
         brand.type = "text"
         brand.name = "brand"
         brand.value = clothing.brand
-    let category = document.createElement('input')
-        category.type = "text"
+    let category = document.createElement('select')
         category.name = "category"
-        category.value = clothing.category
+        let currentCat = document.createElement('option')
+            currentCat.innerHTML = clothing.category
+            currentCat.setAttribute("selected", true)
+        category.append(currentCat)
+        let array = CATEGORIES_ARRAY.filter(cat => cat != clothing.category)
+        array.forEach(cat => {
+            let option = document.createElement('option')
+                option.value = cat
+                option.innerHTML = cat
+                category.append(option)
+        })
     let color = document.createElement('input')
         color.type = "text"
         color.name = "color"
