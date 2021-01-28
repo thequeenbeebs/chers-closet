@@ -30,10 +30,10 @@ function renderOutfits(outfit) {
     let occasion = document.createElement('p')
         occasion.innerHTML = outfit.occasion
     let button1 = document.createElement("button")
-        button1.innerHTML = "Edit Item"
+        button1.innerHTML = "Edit Outfit"
         button1.addEventListener('click', () => renderEditOutfitForm(outfit))
     let button2 = document.createElement("button")
-        button2.innerHTML = "Delete Item"
+        button2.innerHTML = "Delete Outfit"
         button2.addEventListener('click', () => deleteOutfit(outfit))
     if (div) {
             div.append(header, clothingContainer, season, occasion, button1, button2)
@@ -66,50 +66,23 @@ function renderAddOutfitForm() {
         occasion.type = "text"
         occasion.name = "occasion"
         occasion.placeholder = "occasion"
-    let clothing = document.createElement('select')
-        clothing.name = "clothingId"
-        clothing.setAttribute("multiple", true)
-        let placeholder = document.createElement('option')
-            placeholder.innerHTML = "clothing"
-            placeholder.setAttribute("disabled", true)
-            placeholder.setAttribute("selected", true)
-            placeholder.setAttribute("hidden", true)
-        clothing.append(placeholder)
-        CURRENT_USER.clothings.forEach(item => {
-            let option = document.createElement('option')
-                option.value = item.id
-                option.innerHTML = item.name
-                clothing.append(option)
-        })
-    // let plus = document.createElement('button')
-    //     plus.innerHTML = "+"
-    //     plus.addEventListener('click', () => addClothingInput())
+    let clothingDiv = document.createElement('div')
+    CURRENT_USER.clothings.forEach(item => {
+        let clothingOption = document.createElement('input')
+            clothingOption.type = "checkbox"
+            clothingOption.id = item.id
+            clothingOption.value = item.id
+            clothingOption.name = item.id
+        let clothingLabel = document.createElement('label')
+            clothingLabel.for = item.id
+            clothingLabel.innerHTML = item.name
+            clothingDiv.append(clothingOption, clothingLabel)
+    })
     let submit = document.createElement('input')
         submit.type = "submit"
-    form.append(name, season, occasion, clothing, submit)
+    form.append(name, season, occasion, clothingDiv, submit)
     container.append(form)
 }
-
-// function addClothingInput() {
-//     let clothing = document.createElement('select')
-//         clothing.name = "clothingId"
-//         let placeholder = document.createElement('option')
-//             placeholder.innerHTML = "clothing"
-//             placeholder.setAttribute("disabled", true)
-//             placeholder.setAttribute("selected", true)
-//             placeholder.setAttribute("hidden", true)
-//         clothing.append(placeholder)
-//         CURRENT_USER.clothings.forEach(item => {
-//             let option = document.createElement('option')
-//                 option.value = item.id
-//                 option.innerHTML = item.name
-//                 clothing.append(option)
-//         })
-//     let plus = document.createElement('button')
-//         plus.innerHTML = "+"
-//         plus.addEventListener('click', () => addClothingInput())
-//     document.getElementById('create-outfit-form').append(clothing, plus)
-// }
 
 function createOutfit(event) {
     event.preventDefault()
