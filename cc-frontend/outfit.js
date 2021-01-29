@@ -170,30 +170,33 @@ function renderEditOutfitForm(outfit) {
         occasion.type = "text"
         occasion.name = "occasion"
         occasion.value = outfit.occasion
-    let clothing = document.createElement('select')
-        clothing.name = "clothing"
-        let placeholder = document.createElement('option')
-            placeholder.innerHTML = "clothing"
-            placeholder.setAttribute("disabled", true)
-            placeholder.setAttribute("selected", true)
-            placeholder.setAttribute("hidden", true)
-        clothing.append(placeholder)
-        CURRENT_USER.clothings.forEach(item => {
-            let option = document.createElement('option')
-                option.value = item
-                option.innerHTML = item.name
-                clothing.append(option)
+    let clothingDiv = document.createElement('div')
+    CURRENT_USER.clothings.forEach(item => {
+        let clothingOption = document.createElement('input')
+            clothingOption.type = "checkbox"
+            clothingOption.id = item.id
+            clothingOption.value = item.id
+            clothingOption.name = `clothing-${item.id}`
+        let clothingLabel = document.createElement('label')
+            clothingLabel.for = item.id
+            clothingLabel.innerHTML = item.name
+        let br = document.createElement('br')
+        clothingDiv.append(clothingOption, clothingLabel, br)
         })
     let submit = document.createElement('input')
         submit.type = "submit"
-    form.append(name, season, occasion, clothing, submit)
+    form.append(name, season, occasion, clothingDiv, submit)
+    document.getElementById(`outfit-${outfit.id}`).innerHTML = ""
     document.getElementById(`outfit-${outfit.id}`).append(form)
 }
 
-function updateOutfit(event, outfit) {
+function updateOutfit(event, originalOutfit) {
     event.preventDefault()
 
-    let updatedOutfit = {
+    let originalClothings = []
+        originalOutfit.clothings.forEach(item => originalClothings.push(item))
+
+    let editedOutfit = {
         name: event.target.name.value,
         season: event.target.season.value,
         occasion: event.target.occasion.value,
@@ -205,14 +208,35 @@ function updateOutfit(event, outfit) {
             "Accept": "application/json"
         },
         method: "PATCH",
-        body: JSON.stringify(updatedOutfit)
+        body: JSON.stringify(editedOutfit)
     }
 
-    fetch(`http://localhost:3000/outfits/${outfit.id}`, reqPack)
+    fetch(`http://localhost:3000/outfits/${originalOutfit.id}`, reqPack)
         .then(resp => resp.json())
-        .then(item => {
-            document.getElementById(`outfit-${outfit.id}`).innerHTML = ""
-            renderOutfits(item)
+        .then(updatedOutfit => {
+    
+            let updatedClothing = []
+            let checkboxes = document.querySelectorAll("input[type='checkbox']")
+                checkboxes.forEach(box => {
+                    if (box.checked) {
+                        updatedClothing.push(box)
+                    }
+            })
+            updatedClothing.forEach(newItem => {
+                originalClothings.forEach(oldItem => {
+                    if (parseInt(newItem.id) === oldItem.id) {
+                        let index = updatedClothing.indexOf(newItem)
+                        updatedClothing.splice(index, 1)
+                        let otherIndex = originalClothings.indexOf(oldItem)
+                        originalClothings.splice(otherIndex, 1)
+                    }
+                })
+
+            //what's left in updatedClothing needs to create
+            updatedClothing.forEach(item => createOutfitClothing(item, updatedOutfit))
+            //what's left in originalClothing needs to delete
+            originalClothings.forEach(item => deleteOutfitClothing(item, updatedOutfit))
+            })
         })
 }
 
@@ -223,4 +247,10 @@ function deleteOutfit(outfit) {
     let index = CURRENT_USER.outfits.indexOf(outfit)
     CURRENT_USER.outfits.splice(index, 1)
     viewOutfits(CURRENT_USER.outfits)
+}
+
+function deleteOutfitClothing(item, outfit) {
+    // find outfitclothing based on item id and outfit id
+    //delete it 
+    console.log('a work in progress')
 }

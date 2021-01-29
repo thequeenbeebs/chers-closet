@@ -161,6 +161,7 @@ function renderEditClothingForm(clothing) {
     let submit = document.createElement('input')
         submit.type = "submit"
     form.append(name, brand, category, color, image, submit)
+    document.getElementById(`clothing-${clothing.id}`).innerHTML = ""
     document.getElementById(`clothing-${clothing.id}`).append(form)
 }
 
