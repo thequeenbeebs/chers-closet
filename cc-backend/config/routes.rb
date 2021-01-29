@@ -9,5 +9,7 @@ Rails.application.routes.draw do
   post "/outfits", to: "outfits#create"
   patch "/outfits/:id", to: "outfits#update"
   delete '/outfits/:id', to: "outfits#delete"
+  get '/outfit_clothings', to: "outfit_clothings#index"
   post '/outfit_clothings', to: "outfit_clothings#create"
+  delete '/outfit_clothings/:id', to: "outfit_clothings#delete"
 end

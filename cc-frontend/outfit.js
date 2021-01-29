@@ -20,6 +20,7 @@ function renderOutfits(outfit) {
         header.innerHTML = outfit.name
     let clothingContainer = document.createElement('div')
         clothingContainer.classList.add("outfit-images")
+    
     outfit.clothings.forEach(item => {
         let img = document.createElement('img')
             img.src = item.image
@@ -108,14 +109,18 @@ function createOutfit(event) {
         .then(r => r.json())
         .then(outfit =>  {
             CURRENT_USER.outfits.push(outfit)
+            let arrayOfItems = []
             let checkboxes = document.querySelectorAll("input[type='checkbox']");
                 checkboxes.forEach(box => {
                     if (box.checked) {
                         let item = CURRENT_USER.clothings.find(item => item.id === parseInt(box.id))
-                        let outfit = CURRENT_USER.outfits[CURRENT_USER.outfits.length - 1]
-                        createOutfitClothing(item, outfit)
+                        arrayOfItems.push(item)
                     }
             })
+            let newOutfit = CURRENT_USER.outfits[CURRENT_USER.outfits.length - 1]
+            newOutfit.clothings = []
+            createOutfitClothing(arrayOfItems, newOutfit)
+        
     document.getElementById('create-container').innerHTML = ""
     let addButton = document.createElement('button')
         addButton.innerHTML = "Add Outfit"
@@ -124,33 +129,30 @@ function createOutfit(event) {
         })
 }
 
-function createOutfitClothing(item, outfit) {
-    let newOutfitClothing = {
-        clothing_id: item.id,
-        outfit_id: outfit.id
-    }
-    
-    let reqPack = {
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify(newOutfitClothing)
-    }
+async function createOutfitClothing(arrayOfItems, outfit) {
+    if (arrayOfItems.length > 0) {
+        let newOutfitClothing = {
+            clothing_id: arrayOfItems[0].id,
+            outfit_id: outfit.id
+        }
 
-    fetch('http://localhost:3000/outfit_clothings', reqPack)
-        .then(resp => resp.json())
-        .then(data => {
-            let outfit = CURRENT_USER.outfits.find(outfit => outfit.id === data.outfit_id)
-            let clothing = CURRENT_USER.clothings.find(item => item.id === data.clothing_id)
-            if (outfit.clothings) {
-                outfit.clothings.push(clothing)
-            } else {
-                outfit.clothings = [clothing]
-            }
-            renderOutfits(outfit)
-        })
+        let reqPack = {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify(newOutfitClothing)
+        }
+
+        let resp = await fetch('http://localhost:3000/outfit_clothings', reqPack)
+        let data = await resp.json()
+        outfit.clothings.push(arrayOfItems[0])
+        arrayOfItems.shift()
+        createOutfitClothing(arrayOfItems, outfit)
+    } else {
+        renderOutfits(outfit)
+    }      
 }
 
 // UPDATE FUNCTIONS
@@ -222,6 +224,13 @@ function updateOutfit(event, originalOutfit) {
                         updatedClothing.push(box)
                     }
             })
+            updatedOutfit.clothings = []
+            updatedClothing.forEach(input => {
+                let item = CURRENT_USER.clothings.find(item => item.id === parseInt(input.id))
+                updatedOutfit.clothings.push(item)
+            })
+            // debugger
+            renderOutfits(updatedOutfit)
             updatedClothing.forEach(newItem => {
                 originalClothings.forEach(oldItem => {
                     if (parseInt(newItem.id) === oldItem.id) {
@@ -231,11 +240,12 @@ function updateOutfit(event, originalOutfit) {
                         originalClothings.splice(otherIndex, 1)
                     }
                 })
-
             //what's left in updatedClothing needs to create
+            // debugger
             updatedClothing.forEach(item => createOutfitClothing(item, updatedOutfit))
             //what's left in originalClothing needs to delete
             originalClothings.forEach(item => deleteOutfitClothing(item, updatedOutfit))
+            
             })
         })
 }
@@ -250,7 +260,15 @@ function deleteOutfit(outfit) {
 }
 
 function deleteOutfitClothing(item, outfit) {
-    // find outfitclothing based on item id and outfit id
-    //delete it 
-    console.log('a work in progress')
+
+    fetch(`http://localhost:3000/outfit_clothings`)
+        .then(resp => resp.json())
+        .then(joiners => {
+            let toDelete = joiners.find(joiner => joiner.clothing_id === item.id && joiner.outfit_id === outfit.id)
+            fetch(`http://localhost:3000/outfit_clothings/${toDelete.id}`, {method: "DELETE"})
+        })
+
+    
+
+    // figure out how to get rid of those rendered images
 }

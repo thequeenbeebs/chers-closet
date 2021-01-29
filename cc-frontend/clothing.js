@@ -116,6 +116,7 @@ function createClothing(event) {
     fetch('http://localhost:3000/clothings', reqPack)
         .then(resp => resp.json())
         .then(clothes => {
+            CURRENT_USER.clothings.push(clothes)
             renderClothing(clothes)})
 }
 
